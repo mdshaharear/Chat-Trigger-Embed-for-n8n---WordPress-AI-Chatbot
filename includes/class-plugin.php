@@ -30,7 +30,6 @@ final class Plugin {
 		\ChatTriggerEmbedN8n\V2\Native_Core::hooks();
 		Admin_Theme::hooks();
 		Elementor_Integration::hooks();
-		Updates::hooks();
 		Admin::hooks();
 		Site_Health::hooks();
 		Runtime_Lab::hooks();

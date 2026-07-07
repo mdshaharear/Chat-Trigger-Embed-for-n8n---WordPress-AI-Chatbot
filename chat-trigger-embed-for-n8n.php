@@ -7,7 +7,6 @@
  * Requires at least: 6.5
  * Author: MD Shaharear
  * Author URI: https://shaharear.com.bd
- * Update URI: https://github.com/mdshaharear/Chat-Trigger-Embed-for-n8n---WordPress-AI-Chatbot
  * Text Domain: chat-trigger-embed-for-n8n
  * Domain Path: /languages
  * License: GPL-2.0-or-later
@@ -40,7 +39,6 @@ require_once CTEN_DIR . 'includes/class-migrations.php';
 require_once CTEN_DIR . 'includes/class-analytics.php';
 require_once CTEN_DIR . 'includes/class-assets.php';
 require_once CTEN_DIR . 'includes/class-elementor-integration.php';
-require_once CTEN_DIR . 'includes/class-updates.php';
 require_once CTEN_DIR . 'includes/class-preview.php';
 require_once CTEN_DIR . 'includes/class-import-export.php';
 require_once CTEN_DIR . 'includes/class-site-health.php';

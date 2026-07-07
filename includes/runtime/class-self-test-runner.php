@@ -107,7 +107,9 @@ final class Self_Test_Runner {
 		$results[] = ! empty( $settings['enabled'] ) ? Test_Result::pass( 'cfg_enabled', 'configuration', 'Chatbot Enabled', 'Chatbot is enabled in settings.', '' ) : Test_Result::warn( 'cfg_enabled', 'configuration', 'Chatbot Enabled', 'Chatbot is disabled.', '', 'Enable the chatbot only after a successful live test.' );
 		$results[] = ! empty( $settings['webhook_url'] ) ? Test_Result::pass( 'cfg_webhook', 'configuration', 'Webhook URL', 'A webhook URL is configured.', Helpers::sanitize_url( (string) $settings['webhook_url'] ) ? 'URL stored safely.' : 'Sanitized webhook not returned.' ) : Test_Result::fail( 'cfg_webhook', 'configuration', 'Webhook URL', 'No webhook URL configured.', '', 'Paste the production n8n Chat Trigger URL.' );
 		$results[] = ! empty( $settings['profiles'] ) ? Test_Result::pass( 'cfg_profiles', 'configuration', 'Profiles', 'Profiles are stored.', count( (array) $settings['profiles'] ) . ' profiles' ) : Test_Result::warn( 'cfg_profiles', 'configuration', 'Profiles', 'No custom profiles are stored yet.', '', 'Create at least one profile on a live site.' );
-		$results[] = ! empty( $settings['pre_chat_form']['enabled'] ) ? Test_Result::pass( 'cfg_prechat', 'configuration', 'Pre-chat Form', 'Pre-chat form is enabled.', 'Values are metadata only.' ) : Test_Result::warn( 'cfg_prechat', 'configuration', 'Pre-chat Form', 'Pre-chat form is disabled.', '', 'Enable only if you need lead capture before chat start.' );
+		$results[] = ! empty( $settings['pre_chat_form']['enabled'] )
+			? Test_Result::pass( 'cfg_prechat', 'configuration', 'Pre-chat Form', 'Pre-chat form settings are available for compatibility.', 'Public chat does not forward these values to the webhook.' )
+			: Test_Result::warn( 'cfg_prechat', 'configuration', 'Pre-chat Form', 'Pre-chat form is disabled.', '', 'This section is kept only for backward compatibility.' );
 		return $results;
 	}
 

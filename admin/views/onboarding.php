@@ -21,7 +21,7 @@ $steps  = array(
 	<input type="hidden" name="onboarding_status[started]" value="1">
 	<section class="cten-card">
 		<h2><?php esc_html_e( 'Setup Wizard', 'chat-trigger-embed-for-n8n' ); ?></h2>
-		<p class="description"><?php esc_html_e( 'Use this checklist to configure n8n safely. You can set the webhook, choose where the chat appears, pick a light or dark theme, and turn on visitor contact capture.', 'chat-trigger-embed-for-n8n' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Use this checklist to configure n8n safely. You can set the webhook, choose where the chat appears, and pick a light or dark theme without exposing visitor contact details.', 'chat-trigger-embed-for-n8n' ); ?></p>
 		<ul class="cten-checklist">
 			<?php foreach ( $steps as $key => $label ) : ?>
 				<li class="<?php echo esc_attr( $wizard['step'] === $key ? 'is-done' : 'is-pending' ); ?>"><?php echo esc_html( $label ); ?></li>
@@ -37,16 +37,6 @@ $steps  = array(
 		<?php cten_render_checkbox( __( 'Enable Chatbot', 'chat-trigger-embed-for-n8n' ), 'enabled', (bool) $settings['enabled'], __( 'Only turn this on after the webhook is saved and the workflow is active.', 'chat-trigger-embed-for-n8n' ) ); ?>
 		<p><strong><?php esc_html_e( 'Website origin', 'chat-trigger-embed-for-n8n' ); ?></strong> <code id="cten-origin"><?php echo esc_html( \ChatTriggerEmbedN8n\Helpers::get_origin() ); ?></code></p>
 		<p><button type="button" class="button" data-cten-copy-origin><?php esc_html_e( 'Copy Origin', 'chat-trigger-embed-for-n8n' ); ?></button></p>
-	</section>
-	<section class="cten-card">
-		<h2><?php esc_html_e( 'Contact Capture', 'chat-trigger-embed-for-n8n' ); ?></h2>
-		<p class="description"><?php esc_html_e( 'This is the user-friendly lead form. Visitors can enter name, email, phone, and related details before the chat starts, and the values are sent to your webhook as metadata.', 'chat-trigger-embed-for-n8n' ); ?></p>
-		<?php cten_render_checkbox( __( 'Enable Visitor Contact Form', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[enabled]', (bool) $settings['pre_chat_form']['enabled'], __( 'Recommended if you want the webhook to receive contact details from visitors.', 'chat-trigger-embed-for-n8n' ) ); ?>
-		<ul class="cten-list">
-			<li><?php esc_html_e( 'Name, email, and phone are already prepared as defaults.', 'chat-trigger-embed-for-n8n' ); ?></li>
-			<li><?php esc_html_e( 'The data is forwarded with the chat metadata so n8n can store or process it.', 'chat-trigger-embed-for-n8n' ); ?></li>
-			<li><?php esc_html_e( 'You can fine-tune required fields later in the Behaviour tab.', 'chat-trigger-embed-for-n8n' ); ?></li>
-		</ul>
 	</section>
 	<section class="cten-card">
 		<h2><?php esc_html_e( 'Wizard Progress', 'chat-trigger-embed-for-n8n' ); ?></h2>

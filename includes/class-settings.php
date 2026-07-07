@@ -440,7 +440,7 @@ final class Settings {
 			'enabled'      => false,
 			'sending'      => 'metadata',
 			'allow_skip'   => true,
-			'privacy_text' => 'Your name, email, phone number, and other selected details are sent to your webhook when you start the chat.',
+			'privacy_text' => 'This form is kept for compatibility, but the public chat no longer forwards these details to the webhook.',
 			'fields'       => array(
 				array( 'key' => 'name', 'type' => 'text', 'enabled' => true, 'required' => false, 'label' => 'Name', 'placeholder' => 'Your name', 'sort' => 10 ),
 				array( 'key' => 'email', 'type' => 'email', 'enabled' => true, 'required' => false, 'label' => 'Email', 'placeholder' => 'you@example.com', 'sort' => 20 ),

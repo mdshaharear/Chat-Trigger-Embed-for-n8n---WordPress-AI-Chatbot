@@ -37,26 +37,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php cten_render_text( __( 'Human Support Button Label', 'chat-trigger-embed-for-n8n' ), 'human_support_button_label', (string) $settings['human_support_button_label'] ); ?>
 	</section>
 	<section class="cten-card">
-		<h2><?php esc_html_e( 'Pre-chat Form', 'chat-trigger-embed-for-n8n' ); ?></h2>
-		<p class="description"><?php esc_html_e( 'Disabled by default. The setup wizard can turn this on for you. Submitted values are not stored locally by default; n8n must handle storage or processing.', 'chat-trigger-embed-for-n8n' ); ?></p>
-		<?php cten_render_checkbox( __( 'Enable Pre-chat Form', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[enabled]', (bool) $settings['pre_chat_form']['enabled'] ); ?>
-		<?php cten_render_select( __( 'Send Form Values As', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[sending]', array( 'metadata' => 'Metadata' ), (string) $settings['pre_chat_form']['sending'] ); ?>
-		<?php cten_render_checkbox( __( 'Allow Skip', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[allow_skip]', (bool) $settings['pre_chat_form']['allow_skip'] ); ?>
-		<?php cten_render_textarea( __( 'Privacy Text', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[privacy_text]', (string) $settings['pre_chat_form']['privacy_text'] ); ?>
-		<?php foreach ( $settings['pre_chat_form']['fields'] as $index => $field ) : ?>
-			<fieldset class="cten-action">
-				<legend><?php echo esc_html( sprintf( __( 'Field %d', 'chat-trigger-embed-for-n8n' ), $index + 1 ) ); ?></legend>
-				<input type="hidden" name="pre_chat_form[fields][<?php echo esc_attr( (string) $index ); ?>][key]" value="<?php echo esc_attr( $field['key'] ); ?>">
-				<?php cten_render_checkbox( __( 'Enabled', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[fields][' . $index . '][enabled]', (bool) $field['enabled'] ); ?>
-				<?php cten_render_checkbox( __( 'Required', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[fields][' . $index . '][required]', (bool) $field['required'] ); ?>
-				<?php cten_render_select( __( 'Type', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[fields][' . $index . '][type]', array( 'text' => 'Text', 'email' => 'Email', 'phone' => 'Phone', 'url' => 'Website', 'select' => 'Select', 'consent' => 'Consent' ), (string) $field['type'] ); ?>
-				<?php cten_render_text( __( 'Label', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[fields][' . $index . '][label]', (string) $field['label'] ); ?>
-				<?php cten_render_text( __( 'Placeholder', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[fields][' . $index . '][placeholder]', (string) $field['placeholder'] ); ?>
-				<?php cten_render_number( __( 'Sort Order', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[fields][' . $index . '][sort]', $field['sort'], '', 0, 999 ); ?>
-			</fieldset>
-		<?php endforeach; ?>
-	</section>
-	<section class="cten-card">
 		<h2><?php esc_html_e( 'Lead Qualification', 'chat-trigger-embed-for-n8n' ); ?></h2>
 		<p class="description"><?php esc_html_e( 'The plugin sends structured context only. n8n remains responsible for qualification logic.', 'chat-trigger-embed-for-n8n' ); ?></p>
 		<?php cten_render_checkbox( __( 'Enable Qualification Mode', 'chat-trigger-embed-for-n8n' ), 'lead_qualification[enabled]', (bool) $settings['lead_qualification']['enabled'] ); ?>

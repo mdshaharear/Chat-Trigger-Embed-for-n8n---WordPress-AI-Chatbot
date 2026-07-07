@@ -17,7 +17,6 @@ type ChatState = Window & {
 	__ctenEvents?: RuntimeEventCollector | null;
 };
 
-const PRE_CHAT_STORAGE_KEY = 'cten/preChatComplete';
 let runtimePromise: Promise<typeof import('@n8n/chat')> | null = null;
 
 function loadRuntime(): Promise<typeof import('@n8n/chat')> {
@@ -221,99 +220,10 @@ function applyFallbackLinks(config: CtenChatConfig, root: HTMLElement): void {
 	root.appendChild(host);
 }
 
-function getSessionStorage(): Storage | null {
-	try {
-		return window.sessionStorage;
-	} catch {
-		return null;
-	}
-}
-
 function renderPreChatForm(config: CtenChatConfig, root: HTMLElement, onComplete: (values: Record<string, string>) => void): void {
-	const formConfig = config.preChatForm;
-	if (!formConfig?.enabled || getSessionStorage()?.getItem(PRE_CHAT_STORAGE_KEY) === '1') {
-		onComplete({});
-		return;
-	}
-
-	const fields = (formConfig.fields ?? []).filter((field) => field.enabled);
-	if (!fields.length) {
-		onComplete({});
-		return;
-	}
-
-	const panel = document.createElement('form');
-	panel.className = 'cten-pre-chat';
-	panel.setAttribute('aria-label', 'Pre-chat form');
-	fields.forEach((field) => {
-		const wrapper = document.createElement('label');
-		wrapper.className = 'cten-pre-chat__field';
-		wrapper.textContent = field.label;
-		if (field.type === 'select') {
-			const select = document.createElement('select');
-			select.name = field.key;
-			select.required = field.required;
-			const empty = document.createElement('option');
-			empty.value = '';
-			empty.textContent = field.placeholder || 'Select one';
-			select.appendChild(empty);
-			(field.options ?? []).forEach((option) => {
-				const item = document.createElement('option');
-				item.value = option;
-				item.textContent = option;
-				select.appendChild(item);
-			});
-			wrapper.appendChild(select);
-		} else {
-			const input = document.createElement('input');
-			input.name = field.key;
-			input.required = field.required;
-			input.placeholder = field.placeholder || '';
-			input.maxLength = 160;
-			input.type = field.type === 'email' ? 'email' : field.type === 'url' ? 'url' : field.type === 'consent' ? 'checkbox' : field.type === 'phone' ? 'tel' : 'text';
-			if (field.type === 'consent') {
-				input.value = 'yes';
-			}
-			wrapper.appendChild(input);
-		}
-		panel.appendChild(wrapper);
-	});
-	if (formConfig.privacy_text) {
-		const privacy = document.createElement('p');
-		privacy.className = 'cten-pre-chat__privacy';
-		privacy.textContent = formConfig.privacy_text;
-		panel.appendChild(privacy);
-	}
-	const actions = document.createElement('div');
-	actions.className = 'cten-pre-chat__actions';
-	const submit = document.createElement('button');
-	submit.type = 'submit';
-	submit.textContent = 'Start chat';
-	actions.appendChild(submit);
-	if (formConfig.allow_skip) {
-		const skip = document.createElement('button');
-		skip.type = 'button';
-		skip.textContent = 'Skip';
-		skip.addEventListener('click', () => {
-			getSessionStorage()?.setItem(PRE_CHAT_STORAGE_KEY, '1');
-			panel.remove();
-			onComplete({});
-		});
-		actions.appendChild(skip);
-	}
-	panel.appendChild(actions);
-	panel.addEventListener('submit', (event) => {
-		event.preventDefault();
-		const data = new FormData(panel);
-		const values: Record<string, string> = {};
-		for (const [key, value] of data.entries()) {
-			values[key] = String(value).slice(0, 160);
-		}
-		getSessionStorage()?.setItem(PRE_CHAT_STORAGE_KEY, '1');
-		panel.remove();
-		onComplete(values);
-	});
-	root.appendChild(panel);
+	void config;
+	void root;
+	onComplete({});
 }
 
 function createLazyLauncher(config: CtenChatConfig, root: HTMLElement, start: () => void): HTMLButtonElement {
@@ -365,7 +275,7 @@ export function initChat(): void {
 		return;
 	}
 
-	const startRuntime = (preChatValues: Record<string, string>): void => {
+	const startRuntime = (_preChatValues: Record<string, string>): void => {
 		state.__ctenEvents?.emit('Vendor Runtime Requested');
 		if (hasStoredSession()) {
 			state.__ctenEvents?.emit('Session Restored');
@@ -394,7 +304,7 @@ export function initChat(): void {
 				chatSessionKey: config.chatSessionKey,
 				enableStreaming: Boolean(config.enableStreaming),
 				initialMessages: config.initialMessages,
-				metadata: mergePublicMetadata(config.metadata ?? {}, { pluginVersion: config.pluginVersion || '2.0.0', preChat: preChatValues, leadQualification: config.leadQualification ?? {} }, config.metadataFields ?? {}),
+				metadata: mergePublicMetadata(config.metadata ?? {}, { pluginVersion: config.pluginVersion || '2.0.0', leadQualification: config.leadQualification ?? {} }, config.metadataFields ?? {}),
 				defaultLanguage: 'en',
 				i18n: config.i18n as Record<string, CtenChatLanguageConfig> | undefined,
 				allowFileUploads: false,

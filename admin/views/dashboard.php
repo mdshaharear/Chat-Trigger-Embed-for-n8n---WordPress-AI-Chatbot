@@ -10,12 +10,6 @@ $display_position  = $settings['launcher_position'];
 $devices           = \ChatTriggerEmbedN8n\Helpers::device_visibility_label( $settings );
 $webhook_health    = \ChatTriggerEmbedN8n\Helpers::webhook_health( (string) $settings['webhook_url'] );
 $completion        = \ChatTriggerEmbedN8n\Helpers::setup_completion( $settings );
-$update_info       = \ChatTriggerEmbedN8n\Updates::refresh_info();
-$release_date      = '';
-if ( $update_info && ! empty( $update_info['published_at'] ) ) {
-	$timestamp   = strtotime( (string) $update_info['published_at'] );
-	$release_date = $timestamp ? date_i18n( get_option( 'date_format' ), $timestamp ) : (string) $update_info['published_at'];
-}
 ?>
 <div class="cten-grid">
 	<section class="cten-card">
@@ -59,20 +53,6 @@ if ( $update_info && ! empty( $update_info['published_at'] ) ) {
 			<li class="<?php echo esc_attr( ! empty( $settings['quick_actions'] ) ? 'is-done' : 'is-pending' ); ?>"><?php esc_html_e( 'Quick actions are prefilled for first-time users.', 'chat-trigger-embed-for-n8n' ); ?></li>
 		</ul>
 		<p><a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=cten-tools' ) ); ?>"><?php esc_html_e( 'Restore Starter Defaults', 'chat-trigger-embed-for-n8n' ); ?></a></p>
-	</section>
-	<section class="cten-card">
-		<h2><?php esc_html_e( 'Update Status', 'chat-trigger-embed-for-n8n' ); ?></h2>
-		<?php if ( $update_info && ! empty( $update_info['version'] ) ) : ?>
-			<ul class="cten-stats">
-				<li><strong><?php esc_html_e( 'Installed version', 'chat-trigger-embed-for-n8n' ); ?></strong> <?php echo esc_html( CTEN_VERSION ); ?></li>
-				<li><strong><?php esc_html_e( 'Latest GitHub release', 'chat-trigger-embed-for-n8n' ); ?></strong> <?php echo esc_html( $update_info['version'] ); ?></li>
-				<li><strong><?php esc_html_e( 'Release date', 'chat-trigger-embed-for-n8n' ); ?></strong> <?php echo esc_html( $release_date ); ?></li>
-			</ul>
-			<p class="description"><?php esc_html_e( 'When you publish a new GitHub release, WordPress can detect it here after the update cache refreshes.', 'chat-trigger-embed-for-n8n' ); ?></p>
-		<?php else : ?>
-			<p class="description"><?php esc_html_e( 'GitHub release data is not available right now. You can still keep the plugin updated manually from the releases page.', 'chat-trigger-embed-for-n8n' ); ?></p>
-		<?php endif; ?>
-		<p><a class="button" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=cten_refresh_update_info' ), 'cten_refresh_update_info' ) ); ?>"><?php esc_html_e( 'Refresh update cache', 'chat-trigger-embed-for-n8n' ); ?></a></p>
 	</section>
 </div>
 
