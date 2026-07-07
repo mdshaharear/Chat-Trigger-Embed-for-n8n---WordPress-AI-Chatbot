@@ -10,20 +10,29 @@ $display_position  = $settings['launcher_position'];
 $devices           = \ChatTriggerEmbedN8n\Helpers::device_visibility_label( $settings );
 $webhook_health    = \ChatTriggerEmbedN8n\Helpers::webhook_health( (string) $settings['webhook_url'] );
 $completion        = \ChatTriggerEmbedN8n\Helpers::setup_completion( $settings );
-$checklist         = array(
-	__( 'Enable public chat in n8n', 'chat-trigger-embed-for-n8n' ) => $configured && ! \ChatTriggerEmbedN8n\Helpers::is_test_webhook_url( (string) $settings['webhook_url'] ),
-	__( 'Select Embedded Chat', 'chat-trigger-embed-for-n8n' ) => true,
-	__( 'Add the website origin', 'chat-trigger-embed-for-n8n' ) => true,
-	__( 'Use the production Chat Trigger URL', 'chat-trigger-embed-for-n8n' ) => $configured && ! \ChatTriggerEmbedN8n\Helpers::is_test_webhook_url( (string) $settings['webhook_url'] ),
-	__( 'Activate the workflow', 'chat-trigger-embed-for-n8n' ) => $configured,
-	__( 'Connect supported memory when previous sessions are enabled', 'chat-trigger-embed-for-n8n' ) => ! empty( $settings['load_previous_session'] ),
-	__( 'Configure the plugin', 'chat-trigger-embed-for-n8n' ) => $enabled,
-	__( 'Enable the chatbot', 'chat-trigger-embed-for-n8n' ) => $enabled,
-	__( 'Clear website cache', 'chat-trigger-embed-for-n8n' ) => true,
-	__( 'Test in an incognito browser', 'chat-trigger-embed-for-n8n' ) => true,
-);
+$update_info       = \ChatTriggerEmbedN8n\Updates::refresh_info();
+$release_date      = '';
+if ( $update_info && ! empty( $update_info['published_at'] ) ) {
+	$timestamp   = strtotime( (string) $update_info['published_at'] );
+	$release_date = $timestamp ? date_i18n( get_option( 'date_format' ), $timestamp ) : (string) $update_info['published_at'];
+}
 ?>
 <div class="cten-grid">
+	<section class="cten-card">
+		<h2><?php esc_html_e( 'Get Started Fast', 'chat-trigger-embed-for-n8n' ); ?></h2>
+		<p class="description"><?php esc_html_e( 'For a smooth first setup, only configure Connection, choose a Display Mode, and then enable the chatbot.', 'chat-trigger-embed-for-n8n' ); ?></p>
+		<ol class="cten-stats">
+			<li><?php esc_html_e( 'Open Settings and paste the production webhook URL.', 'chat-trigger-embed-for-n8n' ); ?></li>
+			<li><?php esc_html_e( 'Choose Global Footer, Elementor Widget, or Both.', 'chat-trigger-embed-for-n8n' ); ?></li>
+			<li><?php esc_html_e( 'Leave advanced options alone until the bot is working.', 'chat-trigger-embed-for-n8n' ); ?></li>
+			<li><?php esc_html_e( 'Test in an incognito browser before publishing.', 'chat-trigger-embed-for-n8n' ); ?></li>
+		</ol>
+		<p>
+			<a class="button button-primary" href="<?php echo esc_url( admin_url( 'admin.php?page=cten-settings' ) ); ?>"><?php esc_html_e( 'Open Connection', 'chat-trigger-embed-for-n8n' ); ?></a>
+			<a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=cten-onboarding' ) ); ?>"><?php esc_html_e( 'Open Wizard', 'chat-trigger-embed-for-n8n' ); ?></a>
+			<a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=cten-tools' ) ); ?>"><?php esc_html_e( 'Reset / Export', 'chat-trigger-embed-for-n8n' ); ?></a>
+		</p>
+	</section>
 	<section class="cten-card">
 		<h2><?php esc_html_e( 'AI Chat Builder Status', 'chat-trigger-embed-for-n8n' ); ?></h2>
 		<ul class="cten-stats">
@@ -39,27 +48,34 @@ $checklist         = array(
 			<li><strong><?php esc_html_e( 'Current appearance preset', 'chat-trigger-embed-for-n8n' ); ?></strong> <?php echo esc_html( (string) $settings['theme_preset'] ); ?></li>
 			<li><strong><?php esc_html_e( 'Setup completion', 'chat-trigger-embed-for-n8n' ); ?></strong> <?php echo esc_html( $completion . '%' ); ?></li>
 		</ul>
-		<p class="description"><?php esc_html_e( 'AI Chat Builder for WordPress is an independent third-party WordPress integration and is not affiliated with or endorsed by n8n, OpenAI, or Google.', 'chat-trigger-embed-for-n8n' ); ?></p>
-		<p class="description"><?php echo esc_html( \ChatTriggerEmbedN8n\Helpers::internal_use_notice() ); ?></p>
+		<p class="description"><?php esc_html_e( 'The plugin keeps the public bot off until you configure the webhook and enable it yourself.', 'chat-trigger-embed-for-n8n' ); ?></p>
 	</section>
 	<section class="cten-card">
-		<h2><?php esc_html_e( 'Legacy n8n configuration checklist', 'chat-trigger-embed-for-n8n' ); ?></h2>
+		<h2><?php esc_html_e( 'Recommended Defaults', 'chat-trigger-embed-for-n8n' ); ?></h2>
 		<ul class="cten-checklist">
-			<?php foreach ( $checklist as $label => $done ) : ?>
-				<li class="<?php echo esc_attr( $done ? 'is-done' : 'is-pending' ); ?>"><?php echo esc_html( $label ); ?></li>
-			<?php endforeach; ?>
+			<li class="<?php echo esc_attr( ! empty( $settings['theme_mode'] ) ? 'is-done' : 'is-pending' ); ?>"><?php esc_html_e( 'Theme mode is available for light, dark, or system.', 'chat-trigger-embed-for-n8n' ); ?></li>
+			<li class="<?php echo esc_attr( ! empty( $settings['render_mode'] ) ? 'is-done' : 'is-pending' ); ?>"><?php esc_html_e( 'Display mode supports footer, Elementor widget, or both.', 'chat-trigger-embed-for-n8n' ); ?></li>
+			<li class="<?php echo esc_attr( ! empty( $settings['load_previous_session'] ) ? 'is-done' : 'is-pending' ); ?>"><?php esc_html_e( 'Previous session loading stays off unless you need it.', 'chat-trigger-embed-for-n8n' ); ?></li>
+			<li class="<?php echo esc_attr( ! empty( $settings['quick_actions'] ) ? 'is-done' : 'is-pending' ); ?>"><?php esc_html_e( 'Quick actions are prefilled for first-time users.', 'chat-trigger-embed-for-n8n' ); ?></li>
 		</ul>
+		<p><a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=cten-tools' ) ); ?>"><?php esc_html_e( 'Restore Starter Defaults', 'chat-trigger-embed-for-n8n' ); ?></a></p>
 	</section>
 	<section class="cten-card">
-		<h2><?php esc_html_e( 'Actions', 'chat-trigger-embed-for-n8n' ); ?></h2>
-		<p><a class="button button-primary" href="<?php echo esc_url( admin_url( 'admin.php?page=cten-chatbots' ) ); ?>"><?php esc_html_e( 'Open Chatbots', 'chat-trigger-embed-for-n8n' ); ?></a></p>
-		<p><a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=cten-settings' ) ); ?>"><?php esc_html_e( 'Open Settings', 'chat-trigger-embed-for-n8n' ); ?></a></p>
-		<p><a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=cten-legacy-n8n' ) ); ?>"><?php esc_html_e( 'Open Legacy n8n', 'chat-trigger-embed-for-n8n' ); ?></a></p>
-		<p><a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=cten-appearance' ) ); ?>"><?php esc_html_e( 'Open Preview', 'chat-trigger-embed-for-n8n' ); ?></a></p>
-		<p><a class="button" href="<?php echo esc_url( 'https://docs.n8n.io/' ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Troubleshooting link', 'chat-trigger-embed-for-n8n' ); ?></a></p>
+		<h2><?php esc_html_e( 'Update Status', 'chat-trigger-embed-for-n8n' ); ?></h2>
+		<?php if ( $update_info && ! empty( $update_info['version'] ) ) : ?>
+			<ul class="cten-stats">
+				<li><strong><?php esc_html_e( 'Installed version', 'chat-trigger-embed-for-n8n' ); ?></strong> <?php echo esc_html( CTEN_VERSION ); ?></li>
+				<li><strong><?php esc_html_e( 'Latest GitHub release', 'chat-trigger-embed-for-n8n' ); ?></strong> <?php echo esc_html( $update_info['version'] ); ?></li>
+				<li><strong><?php esc_html_e( 'Release date', 'chat-trigger-embed-for-n8n' ); ?></strong> <?php echo esc_html( $release_date ); ?></li>
+			</ul>
+			<p class="description"><?php esc_html_e( 'When you publish a new GitHub release, WordPress can detect it here after the update cache refreshes.', 'chat-trigger-embed-for-n8n' ); ?></p>
+		<?php else : ?>
+			<p class="description"><?php esc_html_e( 'GitHub release data is not available right now. You can still keep the plugin updated manually from the releases page.', 'chat-trigger-embed-for-n8n' ); ?></p>
+		<?php endif; ?>
+		<p><a class="button" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=cten_refresh_update_info' ), 'cten_refresh_update_info' ) ); ?>"><?php esc_html_e( 'Refresh update cache', 'chat-trigger-embed-for-n8n' ); ?></a></p>
 	</section>
 </div>
 
 <?php if ( ! $configured ) : ?>
-	<div class="notice notice-warning inline"><p><?php esc_html_e( 'Connection configuration is incomplete. Add a production Chat Trigger URL before enabling the chatbot.', 'chat-trigger-embed-for-n8n' ); ?></p></div>
+	<div class="notice notice-warning inline"><p><?php esc_html_e( 'You are not connected yet. Start on Settings, paste the production Chat Trigger URL, then choose where the widget should appear.', 'chat-trigger-embed-for-n8n' ); ?></p></div>
 <?php endif; ?>

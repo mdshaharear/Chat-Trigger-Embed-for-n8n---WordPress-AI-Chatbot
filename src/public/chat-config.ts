@@ -50,6 +50,7 @@ export type CtenChatConfig = {
 	preloadOnHover?: boolean;
 	loadAfterDelaySeconds?: number;
 	showOnlineIndicator?: boolean;
+	themeMode?: 'system' | 'light' | 'dark';
 	sessionExpiryDays?: number;
 	runtimeTest?: {
 		enabled?: boolean;

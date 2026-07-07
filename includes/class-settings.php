@@ -80,7 +80,8 @@ final class Settings {
 			'enabled'                     => false,
 			'webhook_url'                 => '',
 			'render_mode'                 => 'global_footer',
-			'load_previous_session'       => true,
+			'theme_mode'                  => 'system',
+			'load_previous_session'       => false,
 			'enable_streaming'            => false,
 			'request_method'              => 'POST',
 			'public_request_headers'      => array(),
@@ -252,6 +253,7 @@ final class Settings {
 		$output['enabled']               = ! empty( $input['enabled'] );
 		$output['webhook_url']           = Helpers::sanitize_url( (string) ( $input['webhook_url'] ?? '' ) );
 		$output['render_mode']           = self::sanitize_choice( (string) ( $input['render_mode'] ?? 'global_footer' ), self::render_modes(), 'global_footer' );
+		$output['theme_mode']            = self::sanitize_choice( (string) ( $input['theme_mode'] ?? 'system' ), self::theme_modes(), 'system' );
 		$output['load_previous_session']  = ! empty( $input['load_previous_session'] );
 		$output['enable_streaming']       = ! empty( $input['enable_streaming'] );
 		$output['request_method']         = in_array( strtoupper( (string) ( $input['request_method'] ?? 'POST' ) ), array( 'GET', 'POST' ), true ) ? strtoupper( (string) $input['request_method'] ) : 'POST';
@@ -438,7 +440,7 @@ final class Settings {
 			'enabled'      => false,
 			'sending'      => 'metadata',
 			'allow_skip'   => true,
-			'privacy_text' => 'Your details are sent to the configured n8n workflow when you start the chat.',
+			'privacy_text' => 'Your name, email, phone number, and other selected details are sent to your webhook when you start the chat.',
 			'fields'       => array(
 				array( 'key' => 'name', 'type' => 'text', 'enabled' => true, 'required' => false, 'label' => 'Name', 'placeholder' => 'Your name', 'sort' => 10 ),
 				array( 'key' => 'email', 'type' => 'email', 'enabled' => true, 'required' => false, 'label' => 'Email', 'placeholder' => 'you@example.com', 'sort' => 20 ),
@@ -541,6 +543,10 @@ final class Settings {
 		return array( 'premium-glass', 'minimal-dark', 'clean-light', 'brand-purple', 'midnight-blue', 'soft-neutral', 'elegant-gold', 'modern-green', 'corporate-blue', 'high-contrast' );
 	}
 
+	public static function theme_modes(): array {
+		return array( 'system', 'light', 'dark' );
+	}
+
 	public static function render_modes(): array {
 		return array( 'global_footer', 'elementor_widget', 'both' );
 	}
@@ -551,6 +557,11 @@ final class Settings {
 
 	public static function can_render_in_elementor_widget( array $settings ): bool {
 		return in_array( (string) ( $settings['render_mode'] ?? 'global_footer' ), array( 'elementor_widget', 'both' ), true );
+	}
+
+	public static function resolve_theme_mode( array $settings = array() ): string {
+		$mode = (string) ( $settings['theme_mode'] ?? 'system' );
+		return in_array( $mode, self::theme_modes(), true ) ? $mode : 'system';
 	}
 
 	public static function sanitize_visibility( mixed $visibility ): array {
@@ -667,6 +678,7 @@ final class Settings {
 				'launcherAccessibilityLabel' => (string) $settings['launcher_accessibility_label'],
 				'showOnlineIndicator' => (bool) $settings['show_online_indicator'],
 				'customAvatarImage'   => (string) $settings['custom_avatar_image'],
+				'themeMode'           => self::resolve_theme_mode( $settings ),
 				'chatInputKey'       => (string) $settings['chat_input_key'],
 				'chatSessionKey'     => (string) $settings['chat_session_key'],
 				'loadPreviousSession'=> (bool) $settings['load_previous_session'],

@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</section>
 	<section class="cten-card">
 		<h2><?php esc_html_e( 'Pre-chat Form', 'chat-trigger-embed-for-n8n' ); ?></h2>
-		<p class="description"><?php esc_html_e( 'Disabled by default. Submitted values are not stored locally by default; n8n must handle storage or processing.', 'chat-trigger-embed-for-n8n' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Disabled by default. The setup wizard can turn this on for you. Submitted values are not stored locally by default; n8n must handle storage or processing.', 'chat-trigger-embed-for-n8n' ); ?></p>
 		<?php cten_render_checkbox( __( 'Enable Pre-chat Form', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[enabled]', (bool) $settings['pre_chat_form']['enabled'] ); ?>
 		<?php cten_render_select( __( 'Send Form Values As', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[sending]', array( 'metadata' => 'Metadata' ), (string) $settings['pre_chat_form']['sending'] ); ?>
 		<?php cten_render_checkbox( __( 'Allow Skip', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[allow_skip]', (bool) $settings['pre_chat_form']['allow_skip'] ); ?>

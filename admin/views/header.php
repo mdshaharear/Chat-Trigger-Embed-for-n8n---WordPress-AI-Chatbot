@@ -14,6 +14,7 @@ delete_transient( 'cten_admin_message' );
 delete_transient( 'cten_admin_error' );
 delete_transient( 'cten_v2_connection_notice' );
 delete_transient( 'cten_v2_chatbot_notice' );
+$admin_theme = \ChatTriggerEmbedN8n\Admin_Theme::current_mode();
 
 $pages = array(
 	'cten-dashboard'     => __( 'Dashboard', 'chat-trigger-embed-for-n8n' ),
@@ -34,8 +35,22 @@ $pages = array(
 );
 ?>
 <div class="wrap cten-admin">
-	<h1><?php esc_html_e( 'Chat Trigger Embed for n8n', 'chat-trigger-embed-for-n8n' ); ?></h1>
-	<p class="description"><?php esc_html_e( 'Independent third-party WordPress integration for the official n8n Chat Trigger.', 'chat-trigger-embed-for-n8n' ); ?></p>
+	<div class="cten-topbar">
+		<div>
+			<h1><?php esc_html_e( 'Chat Trigger Embed for n8n', 'chat-trigger-embed-for-n8n' ); ?></h1>
+			<p class="description"><?php esc_html_e( 'Independent third-party WordPress integration for the official n8n Chat Trigger.', 'chat-trigger-embed-for-n8n' ); ?></p>
+		</div>
+		<form class="cten-theme-switcher" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+			<?php wp_nonce_field( 'cten_save_admin_theme', 'cten_admin_theme_nonce' ); ?>
+			<input type="hidden" name="action" value="cten_save_admin_theme">
+			<label class="screen-reader-text" for="cten-admin-theme-mode"><?php esc_html_e( 'Admin theme mode', 'chat-trigger-embed-for-n8n' ); ?></label>
+			<select id="cten-admin-theme-mode" name="admin_theme_mode" onchange="this.form.submit()">
+				<option value="system" <?php selected( $admin_theme, 'system' ); ?>><?php esc_html_e( 'System', 'chat-trigger-embed-for-n8n' ); ?></option>
+				<option value="light" <?php selected( $admin_theme, 'light' ); ?>><?php esc_html_e( 'Light', 'chat-trigger-embed-for-n8n' ); ?></option>
+				<option value="dark" <?php selected( $admin_theme, 'dark' ); ?>><?php esc_html_e( 'Dark', 'chat-trigger-embed-for-n8n' ); ?></option>
+			</select>
+		</form>
+	</div>
 	<?php if ( $notice ) : ?>
 		<div class="notice notice-success is-dismissible"><p><?php echo esc_html( $notice ); ?></p></div>
 	<?php endif; ?>
@@ -56,4 +71,14 @@ $pages = array(
 			<a class="cten-nav__link <?php echo esc_attr( $page === $slug ? 'is-active' : '' ); ?>" href="<?php echo esc_url( admin_url( 'admin.php?page=' . $slug ) ); ?>"><?php echo esc_html( $title ); ?></a>
 		<?php endforeach; ?>
 	</nav>
+	<div class="cten-start-card">
+		<div>
+			<strong><?php esc_html_e( 'New here?', 'chat-trigger-embed-for-n8n' ); ?></strong>
+			<p><?php esc_html_e( 'Start with the Connection page, copy your site origin, switch to Elementor Widget or Global Footer, then enable the chatbot.', 'chat-trigger-embed-for-n8n' ); ?></p>
+		</div>
+		<p class="cten-start-card__actions">
+			<a class="button button-primary" href="<?php echo esc_url( admin_url( 'admin.php?page=cten-settings' ) ); ?>"><?php esc_html_e( 'Open Connection', 'chat-trigger-embed-for-n8n' ); ?></a>
+			<a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=cten-onboarding' ) ); ?>"><?php esc_html_e( 'Open Wizard', 'chat-trigger-embed-for-n8n' ); ?></a>
+		</p>
+	</div>
 	<div class="cten-page">

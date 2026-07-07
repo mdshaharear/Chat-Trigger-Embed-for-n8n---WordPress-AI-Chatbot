@@ -21,20 +21,40 @@ $steps  = array(
 	<input type="hidden" name="onboarding_status[started]" value="1">
 	<section class="cten-card">
 		<h2><?php esc_html_e( 'Setup Wizard', 'chat-trigger-embed-for-n8n' ); ?></h2>
-		<p class="description"><?php esc_html_e( 'Use this checklist to configure n8n safely. The chatbot is not enabled automatically.', 'chat-trigger-embed-for-n8n' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Use this checklist to configure n8n safely. You can set the webhook, choose where the chat appears, pick a light or dark theme, and turn on visitor contact capture.', 'chat-trigger-embed-for-n8n' ); ?></p>
 		<ul class="cten-checklist">
 			<?php foreach ( $steps as $key => $label ) : ?>
 				<li class="<?php echo esc_attr( $wizard['step'] === $key ? 'is-done' : 'is-pending' ); ?>"><?php echo esc_html( $label ); ?></li>
 			<?php endforeach; ?>
 		</ul>
-		<?php cten_render_select( __( 'Current Step', 'chat-trigger-embed-for-n8n' ), 'onboarding_status[step]', $steps, (string) $wizard['step'] ); ?>
-		<?php cten_render_checkbox( __( 'Mark Wizard Complete', 'chat-trigger-embed-for-n8n' ), 'onboarding_status[completed]', (bool) $wizard['completed'], __( 'This hides first-run setup reminders but keeps the wizard available here.', 'chat-trigger-embed-for-n8n' ) ); ?>
+	</section>
+	<section class="cten-card">
+		<h2><?php esc_html_e( 'Connection Setup', 'chat-trigger-embed-for-n8n' ); ?></h2>
+		<p class="description"><?php esc_html_e( 'Paste the production webhook URL from your active n8n Chat Trigger. This wizard can do the first setup without sending you to three different pages.', 'chat-trigger-embed-for-n8n' ); ?></p>
+		<?php cten_render_text( __( 'Production Webhook URL', 'chat-trigger-embed-for-n8n' ), 'webhook_url', (string) $settings['webhook_url'], 'url', __( 'Use the production URL, not the test URL.', 'chat-trigger-embed-for-n8n' ) ); ?>
+		<?php cten_render_select( __( 'Display Mode', 'chat-trigger-embed-for-n8n' ), 'render_mode', array( 'global_footer' => 'Global Footer', 'elementor_widget' => 'Elementor Widget', 'both' => 'Both' ), (string) $settings['render_mode'], __( 'Elementor Widget is best when you want the chat only on specific pages.', 'chat-trigger-embed-for-n8n' ) ); ?>
+		<?php cten_render_select( __( 'Theme Mode', 'chat-trigger-embed-for-n8n' ), 'theme_mode', array( 'system' => 'System', 'light' => 'Light', 'dark' => 'Dark' ), (string) $settings['theme_mode'], __( 'System follows the visitor device theme automatically.', 'chat-trigger-embed-for-n8n' ) ); ?>
+		<?php cten_render_checkbox( __( 'Enable Chatbot', 'chat-trigger-embed-for-n8n' ), 'enabled', (bool) $settings['enabled'], __( 'Only turn this on after the webhook is saved and the workflow is active.', 'chat-trigger-embed-for-n8n' ) ); ?>
 		<p><strong><?php esc_html_e( 'Website origin', 'chat-trigger-embed-for-n8n' ); ?></strong> <code id="cten-origin"><?php echo esc_html( \ChatTriggerEmbedN8n\Helpers::get_origin() ); ?></code></p>
 		<p><button type="button" class="button" data-cten-copy-origin><?php esc_html_e( 'Copy Origin', 'chat-trigger-embed-for-n8n' ); ?></button></p>
+	</section>
+	<section class="cten-card">
+		<h2><?php esc_html_e( 'Contact Capture', 'chat-trigger-embed-for-n8n' ); ?></h2>
+		<p class="description"><?php esc_html_e( 'This is the user-friendly lead form. Visitors can enter name, email, phone, and related details before the chat starts, and the values are sent to your webhook as metadata.', 'chat-trigger-embed-for-n8n' ); ?></p>
+		<?php cten_render_checkbox( __( 'Enable Visitor Contact Form', 'chat-trigger-embed-for-n8n' ), 'pre_chat_form[enabled]', (bool) $settings['pre_chat_form']['enabled'], __( 'Recommended if you want the webhook to receive contact details from visitors.', 'chat-trigger-embed-for-n8n' ) ); ?>
 		<ul class="cten-list">
-			<li><?php esc_html_e( 'Use the production Chat Trigger URL, not the test URL.', 'chat-trigger-embed-for-n8n' ); ?></li>
-			<li><?php esc_html_e( 'Enable Embedded Chat in n8n and add this website origin to Allowed Origins.', 'chat-trigger-embed-for-n8n' ); ?></li>
+			<li><?php esc_html_e( 'Name, email, and phone are already prepared as defaults.', 'chat-trigger-embed-for-n8n' ); ?></li>
+			<li><?php esc_html_e( 'The data is forwarded with the chat metadata so n8n can store or process it.', 'chat-trigger-embed-for-n8n' ); ?></li>
+			<li><?php esc_html_e( 'You can fine-tune required fields later in the Behaviour tab.', 'chat-trigger-embed-for-n8n' ); ?></li>
+		</ul>
+	</section>
+	<section class="cten-card">
+		<h2><?php esc_html_e( 'Wizard Progress', 'chat-trigger-embed-for-n8n' ); ?></h2>
+		<?php cten_render_select( __( 'Current Step', 'chat-trigger-embed-for-n8n' ), 'onboarding_status[step]', $steps, (string) $wizard['step'] ); ?>
+		<?php cten_render_checkbox( __( 'Mark Wizard Complete', 'chat-trigger-embed-for-n8n' ), 'onboarding_status[completed]', (bool) $wizard['completed'], __( 'This hides first-run setup reminders but keeps the wizard available here.', 'chat-trigger-embed-for-n8n' ) ); ?>
+		<ul class="cten-list">
 			<li><?php esc_html_e( 'Activate the workflow before enabling the public chatbot.', 'chat-trigger-embed-for-n8n' ); ?></li>
+			<li><?php esc_html_e( 'Add your site origin to Allowed Origins in n8n.', 'chat-trigger-embed-for-n8n' ); ?></li>
 			<li><?php esc_html_e( 'Connect supported memory before enabling previous-session loading.', 'chat-trigger-embed-for-n8n' ); ?></li>
 		</ul>
 	</section>

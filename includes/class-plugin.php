@@ -28,7 +28,9 @@ final class Plugin {
 		Import_Export::hooks();
 		Analytics::hooks();
 		\ChatTriggerEmbedN8n\V2\Native_Core::hooks();
+		Admin_Theme::hooks();
 		Elementor_Integration::hooks();
+		Updates::hooks();
 		Admin::hooks();
 		Site_Health::hooks();
 		Runtime_Lab::hooks();
@@ -78,7 +80,7 @@ final class Plugin {
 		?>
 		<div id="cten-chat-shell" class="cten-shell">
 			<div id="cten-quick-actions" class="cten-quick-actions" aria-label="<?php echo esc_attr__( 'Conversation starters', 'chat-trigger-embed-for-n8n' ); ?>"></div>
-			<div id="cten-chat-root" class="n8n-chat cten-chat" data-cten-root="1"></div>
+			<div id="cten-chat-root" class="n8n-chat cten-chat" data-cten-root="1" data-cten-theme-mode="<?php echo esc_attr( (string) ( $config['themeMode'] ?? 'system' ) ); ?>"></div>
 			<script type="application/json" id="cten-chat-config"><?php echo esc_html( wp_json_encode( $config, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ) ); ?></script>
 		</div>
 		<?php

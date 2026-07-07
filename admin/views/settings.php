@@ -9,8 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<input type="hidden" name="enabled" value="0">
 	<section class="cten-card">
 		<h2><?php esc_html_e( 'Connection', 'chat-trigger-embed-for-n8n' ); ?></h2>
+		<p class="description"><?php esc_html_e( 'Start with the production URL and a display mode. Leave advanced options alone until the chatbot works on one page.', 'chat-trigger-embed-for-n8n' ); ?></p>
 		<?php cten_render_checkbox( __( 'Enable Chatbot', 'chat-trigger-embed-for-n8n' ), 'enabled', (bool) $settings['enabled'], __( 'The chatbot stays disabled until this is turned on and a production webhook is saved.', 'chat-trigger-embed-for-n8n' ) ); ?>
 		<?php cten_render_select( __( 'Display Mode', 'chat-trigger-embed-for-n8n' ), 'render_mode', array( 'global_footer' => 'Global Footer', 'elementor_widget' => 'Elementor Widget', 'both' => 'Both' ), (string) $settings['render_mode'], __( 'Use Elementor Widget when you want the chat to appear only inside a page builder layout.', 'chat-trigger-embed-for-n8n' ) ); ?>
+		<?php cten_render_select( __( 'Theme Mode', 'chat-trigger-embed-for-n8n' ), 'theme_mode', array( 'system' => 'System', 'light' => 'Light', 'dark' => 'Dark' ), (string) $settings['theme_mode'], __( 'System follows the visitor/browser preference and looks best for most sites.', 'chat-trigger-embed-for-n8n' ) ); ?>
 		<?php cten_render_text( __( 'n8n Chat Trigger Production URL', 'chat-trigger-embed-for-n8n' ), 'webhook_url', (string) $settings['webhook_url'], 'url', __( 'Use the production webhook URL from an active workflow configured for Embedded Chat.', 'chat-trigger-embed-for-n8n' ) ); ?>
 		<div class="cten-diagnostics">
 			<div class="cten-diagnostics__row">

@@ -59,6 +59,9 @@ function applyWidgetAttrs(root: HTMLElement, config: CtenChatConfig): void {
 	if (config.mobileLayout) {
 		root.dataset.ctenMobileLayout = config.mobileLayout;
 	}
+	if (config.themeMode) {
+		root.dataset.ctenThemeMode = config.themeMode;
+	}
 	root.dataset.ctenShowOnlineIndicator = config.showOnlineIndicator === false ? '0' : '1';
 	if (config.desktopWidth) {
 		root.style.setProperty('--chat--window--width', `${config.desktopWidth}px`);
