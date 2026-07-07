@@ -1,0 +1,26 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/wp-admin/admin.php?page=cten-dashboard",
+  "steps": [
+    {
+      "step": "login",
+      "username": "admin",
+      "password": "password"
+    },
+    {
+      "step": "installPlugin",
+      "pluginZipFile": {
+        "resource": "local",
+        "path": "dist/chat-trigger-embed-for-n8n.zip"
+      }
+    },
+    {
+      "step": "activatePlugin",
+      "pluginPath": "chat-trigger-embed-for-n8n/chat-trigger-embed-for-n8n.php"
+    },
+    {
+      "step": "openUrl",
+      "url": "/wp-admin/admin.php?page=cten-runtime-lab"
+    }
+  ]
+}

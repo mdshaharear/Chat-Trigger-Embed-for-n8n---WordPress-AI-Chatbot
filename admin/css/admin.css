@@ -1,0 +1,43 @@
+.cten-admin .cten-nav{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 20px}
+.cten-admin .cten-nav__link{background:#fff;border:1px solid #dcdcde;border-radius:999px;color:#1d2327;padding:8px 14px;text-decoration:none}
+.cten-admin .cten-nav__link.is-active{background:#1d2327;border-color:#1d2327;color:#fff}
+.cten-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.cten-card{background:#fff;border:1px solid #dcdcde;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 6px 18px rgba(16,24,40,.05)}
+.cten-card h2{margin-top:0}
+.cten-stats,.cten-checklist,.cten-list{margin:0;padding-left:18px}
+.cten-checklist li.is-done{color:#0a7c31}
+.cten-checklist li.is-pending{color:#8a6d3b}
+.cten-diagnostics{padding:16px;border:1px solid #dcdcde;border-radius:12px;background:#f8fafc;margin:16px 0}
+.cten-diagnostics__row{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+.cten-diagnostics__row p{margin-bottom:0}
+.cten-field{margin:0 0 16px}
+.cten-field .description{display:block;color:#646970;margin-top:6px}
+.cten-field input[type=text],.cten-field input[type=url],.cten-field input[type=number],.cten-field select,.cten-field textarea{width:100%;max-width:100%;margin-top:6px}
+.cten-field--checkbox label{display:flex;align-items:center;gap:10px}
+.cten-action{border:1px solid #dcdcde;border-radius:12px;padding:16px;margin:16px 0}
+.cten-preview{position:relative;isolation:isolate;padding:16px;background:linear-gradient(135deg,#111827,#1f2937);border-radius:20px;overflow:hidden}
+.cten-preview__switcher{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.cten-preview__switcher-btn{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#fff;border-radius:999px;padding:8px 12px;cursor:pointer}
+.cten-preview__switcher-btn.is-active{background:#fff;color:#111827}
+.cten-preview__launcher{position:absolute;right:16px;bottom:16px;width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:#6d28d9;color:#fff;box-shadow:0 12px 32px rgba(0,0,0,.28)}
+.cten-preview__window{max-width:520px;min-height:640px;margin-right:auto;background:rgba(15,23,42,.82);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.14);border-radius:24px;overflow:hidden;color:#e5e7eb}
+.cten-preview[data-preview-size="tablet"] .cten-preview__window{max-width:420px;min-height:620px}
+.cten-preview[data-preview-size="mobile"] .cten-preview__window{max-width:100%;min-height:520px}
+.cten-preview__header{display:flex;justify-content:space-between;gap:16px;padding:18px;background:rgba(17,24,39,.88)}
+.cten-preview__title{font-size:20px;font-weight:700}
+.cten-preview__subtitle{font-size:14px;color:#9ca3af}
+.cten-preview__status{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px;color:#9ca3af}
+.cten-online-indicator{width:10px;height:10px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.12)}
+.cten-preview__close{border:0;background:transparent;color:inherit;font-size:28px;line-height:1}
+.cten-preview__body{padding:18px;display:grid;gap:12px}
+.cten-preview__message{max-width:80%;padding:12px 14px;border-radius:18px;line-height:1.5}
+.cten-preview__message--bot{background:#111827;color:#fff}
+.cten-preview__message--user{background:#6d28d9;color:#fff;margin-left:auto}
+.cten-preview__actions{display:flex;flex-wrap:wrap;gap:10px}
+.cten-preview__action{border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff;border-radius:999px;padding:10px 14px}
+.cten-preview__dynamic{display:flex;flex-wrap:wrap;gap:10px}
+.cten-preview__dynamic-option{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;padding:10px 14px}
+.cten-preview__footer{padding:16px;border-top:1px solid rgba(255,255,255,.1);background:rgba(17,24,39,.92)}
+.cten-preview__input{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;margin-top:12px;background:#111827;border-radius:16px;color:#9ca3af}
+.cten-inline-form{margin-bottom:16px}
+@media (max-width: 782px){.cten-preview__window{min-height:520px}}

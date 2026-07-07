@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build outputs that should not be committed
+dist/*.zip
+test-results/
+
+# Local logs and runtime files
+*.log
+tools/runtime/*.log
+
+# OS and editor clutter
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local environment files
+.env
+.env.*
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
